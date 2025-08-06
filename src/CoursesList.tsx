@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Text, SafeAreaView, FlatList, View, StyleSheet } from 'react-native';
 import { Item } from './types';
 import { Course } from './Course';
+import { ThemesSelector } from './ThemesSelector';
 
 export const CoursesList = () => {
   const [data, setData] = useState<Item[]>([]);
@@ -20,8 +21,12 @@ export const CoursesList = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.themesSelectorContainer}>
+        <ThemesSelector />
+      </View>
       <FlatList
         data={data}
+        style={styles.list}
         renderItem={Course}
         horizontal
         ItemSeparatorComponent={Separator}
@@ -36,6 +41,14 @@ const Separator = () => {
 };
 
 const styles = StyleSheet.create({
+  themesSelectorContainer: {
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 38,
+  },
+  list: {
+    marginTop: 20,
+  },
   separator: {
     width: 18,
   },
