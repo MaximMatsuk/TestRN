@@ -1,17 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ArrowDown from '../../assets/arrow.svg';
-import { useNavigation } from '@react-navigation/native';
 
-export const ThemesSelector = () => {
-  const navigation = useNavigation();
+type Props = {
+  selectedTheme: string;
+  onOpenThemesModal: () => void;
+};
 
-  const onPress = () => {
-    navigation.navigate('Themes');
-  };
-
+export const SelectedThemeButton = ({ selectedTheme, onOpenThemesModal }: Props) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text style={styles.text}>Themes</Text>
+    <TouchableOpacity style={styles.container} onPress={onOpenThemesModal}>
+      <Text style={styles.text}>{selectedTheme}</Text>
       <ArrowDown />
     </TouchableOpacity>
   );
