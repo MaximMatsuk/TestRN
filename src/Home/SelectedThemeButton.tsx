@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import ArrowDown from '../../assets/arrow.svg';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import ArrowDown from '../assets/arrow.svg';
 
 type Props = {
   selectedTheme: string;

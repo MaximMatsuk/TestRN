@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { Home } from './screens/Home/Home';
+import { Home } from './Home/Home';
 
 function App() {
   return (

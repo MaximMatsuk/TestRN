@@ -15,6 +15,7 @@ type Props = {
   isOpen: boolean;
   onSelectTheme: (theme: string) => void;
   selectedTheme: string;
+  themes: string[];
 };
 
 export const ThemesModal = ({
@@ -22,6 +23,7 @@ export const ThemesModal = ({
   isOpen,
   onSelectTheme,
   selectedTheme,
+  themes,
 }: Props) => {
   const onSelect = (theme: string) => {
     onSelectTheme(theme);
@@ -29,7 +31,7 @@ export const ThemesModal = ({
   };
 
   return (
-    <Modal visible={isOpen}>
+    <Modal visible={isOpen} supportedOrientations={['landscape']}>
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Выбор темы</Text>
@@ -38,7 +40,7 @@ export const ThemesModal = ({
           </TouchableOpacity>
         </View>
         <FlatList
-          data={['Все темы', 'Тема 1', 'Тема 2', 'Тема 3']}
+          data={themes}
           renderItem={({ item }) => (
             <ThemeItem
               item={item}
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 16,
   },
   header: {
     marginTop: 24,

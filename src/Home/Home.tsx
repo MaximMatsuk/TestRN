@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { SafeAreaView, FlatList, View, StyleSheet } from 'react-native';
+import { useEffect, useState, useMemo } from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import { Item } from '../../types';
+import { CourseDto } from '../types';
 import { SelectedThemeButton } from './SelectedThemeButton';
-import { Course } from './Course';
-import { ThemesModal } from './ThemesModal';
+import { ThemesModal } from './ThemesSelectorModal/ThemesModal';
+import { Courses } from './Courses';
 
 const DEFAULT_THEME = 'Все темы';
 
 export const Home = () => {
-  const [data, setData] = useState<Item[]>([]);
+  const [coursesData, setCoursesData] = useState<CourseDto[]>([]);
   const [selectedTheme, setSelectedTheme] = useState<string>(DEFAULT_THEME);
   const [isThemesModalVisible, setIsThemesModalVisible] =
     useState<boolean>(false);
@@ -18,7 +18,7 @@ export const Home = () => {
     const fetchData = async () => {
       const response = await fetch('https://logiclike.com/docs/courses.json');
       const data = await response.json();
-      setData(data);
+      setCoursesData(data);
     };
 
     fetchData();
@@ -29,6 +29,19 @@ export const Home = () => {
     setIsThemesModalVisible(false);
   };
 
+  const themes = useMemo(() => {
+    const allTags = coursesData.flatMap(item => item.tags);
+    const uniqueTags = [DEFAULT_THEME, ...new Set(allTags)];
+    return uniqueTags;
+  }, [coursesData]);
+
+  const filteredCourses = useMemo(() => {
+    if (selectedTheme === DEFAULT_THEME) {
+      return coursesData;
+    }
+    return coursesData.filter(item => item.tags.includes(selectedTheme));
+  }, [coursesData, selectedTheme]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.themesSelectorContainer}>
@@ -37,26 +50,16 @@ export const Home = () => {
           onOpenThemesModal={() => setIsThemesModalVisible(true)}
         />
       </View>
-      <FlatList
-        data={data}
-        style={styles.list}
-        keyExtractor={item => item.id}
-        renderItem={Course}
-        horizontal
-        ItemSeparatorComponent={Separator}
-        showsHorizontalScrollIndicator={false}
-      />
+      <Courses courses={filteredCourses} />
       <ThemesModal
         isOpen={isThemesModalVisible}
         onClose={() => setIsThemesModalVisible(false)}
         onSelectTheme={onSelectTheme}
+        selectedTheme={selectedTheme}
+        themes={themes}
       />
     </SafeAreaView>
   );
-};
-
-const Separator = () => {
-  return <View style={styles.separator} />;
 };
 
 const styles = StyleSheet.create({
@@ -65,14 +68,9 @@ const styles = StyleSheet.create({
     marginTop: 12,
     marginBottom: 38,
   },
-  list: {
-    marginTop: 20,
-  },
-  separator: {
-    width: 18,
-  },
   container: {
     backgroundColor: '#7446EE',
     flex: 1,
+    paddingHorizontal: 16,
   },
 });

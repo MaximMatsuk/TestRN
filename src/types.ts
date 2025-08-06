@@ -1,4 +1,4 @@
-export type Item = {
+export type CourseDto = {
   name: string;
   image: string;
   id: string;

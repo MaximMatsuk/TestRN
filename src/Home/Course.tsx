@@ -1,5 +1,5 @@
 import { Image, Text, View, StyleSheet } from 'react-native';
-import { CourseDto } from '../../types';
+import { CourseDto } from '../types';
 
 export const Course = ({ item }: { item: CourseDto }) => {
   return (
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 1,
     shadowRadius: 0,
-    elevation: 6,
+    elevation: 6, // not working, need to check more
   },
   image: {
     width: 144,
