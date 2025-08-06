@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Text, SafeAreaView, FlatList, View, StyleSheet } from 'react-native';
-import { Item } from './types';
-import { Course } from './Course';
-import { ThemesSelector } from './ThemesSelector';
+import { SafeAreaView, FlatList, View, StyleSheet } from 'react-native';
 
-export const CoursesList = () => {
+import { Item } from '../../types';
+import { ThemesSelector } from './ThemesSelector';
+import { Course } from './Course';
+
+export const Home = () => {
   const [data, setData] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -16,8 +17,6 @@ export const CoursesList = () => {
 
     fetchData();
   }, []);
-
-  console.log(data);
 
   return (
     <SafeAreaView style={styles.container}>

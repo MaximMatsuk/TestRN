@@ -1,5 +1,5 @@
 import { Image, Text, View, StyleSheet } from 'react-native';
-import { Item } from './types';
+import { Item } from '../../types';
 
 export const Course = ({ item }: { item: Item }) => {
   return (
